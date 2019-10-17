@@ -1,0 +1,26 @@
+.add-task {
+  color: $gray-300;
+  display: flex;
+  border: 1px solid $gray-700;
+  padding: 0.2em;
+  border-radius: $border-radius-large;
+  background: $gray-600;
+  i {
+    // margin-top: 0.1em;
+    font-size: 1.3em;
+    line-height: 0.9em;
+    margin: auto 0;
+  }
+  input {
+    // transition: all 0.2s ease-out;
+    height: 2em;
+    color: $white;
+    background: transparent;
+    // width: 18em;
+    border: 0;
+    &:focus {
+      color: $gray-000;
+      // width: 22em;
+    }
+  }
+}

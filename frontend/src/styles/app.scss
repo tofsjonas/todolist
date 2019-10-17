@@ -1,0 +1,39 @@
+.app {
+  text-align: center;
+  background-color: $gray-500;
+  border-radius: $border-radius-large;
+  width: $app-width;
+  // ratio = 540/420 = 1.285714
+  min-height: calc((540 / 420) * #{$app-width});
+  padding-bottom: 4em;
+
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.app-main {
+  // color: $gray-100;
+  margin: 0 auto;
+  width: 20em;
+}
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid $gray-700;
+  margin: 0.2em 0;
+  padding: 0;
+  // border-top: 1px solid red;
+
+  // color: $gray-600 !important;
+}
+// .app-header {
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+//   // font-size: calc(10px + 2vmin);
+//   color: white;
+// }

@@ -1,0 +1,57 @@
+.task {
+  position: relative;
+  text-align: left;
+  display: flex;
+  justify-content: stretch;
+  align-items: stretch;
+  align-content: stretch;
+  margin: 0.5em 0;
+  input {
+    border: 0;
+    width: 100%;
+    background: transparent;
+  }
+  &.done {
+    .title,
+    .memo {
+      color: $gray-200;
+      text-decoration: line-through;
+    }
+  }
+  .pin {
+    position: absolute;
+    left: -1.4em;
+    color: $pink-200;
+  }
+  .check {
+    position: relative;
+    background: $gray-300;
+    border: 1px solid $gray-700;
+    border-radius: $border-radius-small;
+    margin-top: 0.25em;
+    width: 0.8em;
+    height: 0.8em;
+    .icon-ok {
+      position: absolute;
+      display: inline-block;
+      top: 0.1em;
+      left: -0.05em;
+      color: $white;
+      font-size: 0.65em;
+      line-height: 0;
+    }
+  }
+
+  .description {
+    flex: 1;
+    margin: 0 0.3em;
+  }
+  .title {
+    color: $white;
+    font-size: 0.7em;
+  }
+  .memo {
+    color: $gray-100;
+    font-size: 0.7em;
+  }
+}

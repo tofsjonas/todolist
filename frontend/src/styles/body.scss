@@ -1,0 +1,39 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  //  https://joshuawinn.com/responsive-diagonal-two-color-backgrounds-with-css/
+  background: linear-gradient(160deg, $pink-100 50%, $pink-200 50%);
+  // background: linear-gradient(to right bottom, $color-pink-light 50%, $color-pink-dark 50%);
+  // background: linear-gradient(to bottom right, green, green 25%, yellow 25%, yellow 50%, orange 50%, orange 75%, red 75%);
+  // background: linear-gradient(35deg, green, green 25%, yellow 25%, yellow 50%, orange 50%, orange 75%, red 75%);
+
+  height: 100vh;
+  width: 100vw;
+  font-size: 12px;
+
+  @media (min-width: 599px) {
+    font-size: 16px;
+    // background: red;
+  }
+  @media (min-width: 799px) {
+    font-size: 18px;
+    // background: green;
+  }
+  @media (min-width: 999px) {
+    font-size: 20px;
+    // background: blue;
+  }
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+.clickable {
+  &:hover {
+    color: white;
+    cursor: pointer;
+  }
+}

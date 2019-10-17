@@ -1,0 +1,32 @@
+.dot-menu {
+  position: absolute;
+  background: $gray-400;
+  width: 9em;
+  left: -7.9em;
+  top: 2.3em;
+  font-size: 0.7em;
+  border-radius: $border-radius-large;
+  z-index: 1;
+  padding: 0.2em 0.7em;
+  > div {
+    margin: 0.6em 0;
+  }
+  i {
+    margin-right: 0.4em;
+  }
+  .icon-up-dir {
+    color: $gray-400;
+    font-size: 2.5em;
+    position: absolute;
+    top: -0.75em;
+    right: -0.5em;
+  }
+}
+.dots {
+  color: $gray-100;
+  position: relative;
+  .icon-dot-3 {
+    z-index: 2;
+    position: relative;
+  }
+}
