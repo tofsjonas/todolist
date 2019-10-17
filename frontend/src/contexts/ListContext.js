@@ -5,8 +5,8 @@ export const ListContext = createContext()
 const initialState = []
 
 const ListContextProvider = ({ children }) => {
-  const [tasks, dispatch] = useReducer(listReducer, initialState)
-  return <ListContext.Provider value={{ tasks, dispatch }}>{children}</ListContext.Provider>
+  const [tasklist, dispatch] = useReducer(listReducer, initialState)
+  return <ListContext.Provider value={{ tasklist, dispatch }}>{children}</ListContext.Provider>
 }
 
 export default ListContextProvider

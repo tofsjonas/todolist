@@ -1,36 +1,40 @@
-import React, {
-  useState,
-  useRef,
-  //  useEffect
-} from 'react'
+import React, { useState, useRef, useContext, useEffect } from 'react'
 import useOuterClickNotifier from '../lib/useOuterClickNotifier'
+import { ListContext } from '../contexts/ListContext'
 
-const DotMenu = ({ task }) => {
+const TaskItemMenu = ({ task }) => {
+  useEffect(() => {
+    console.log('SPACETAG: TaskItemMenu.js TASK CHANGED')
+  }, [task])
+
+  const { dispatch } = useContext(ListContext)
+
   const innerRef = useRef(null)
   const [visible, setVisible] = useState(false)
   const toggleVisible = () => {
     setVisible(!visible)
   }
 
-  const pinTask = e => {
+  const togglePin = e => {
     e.stopPropagation()
+    const payload = { ...task, pinned: !task.pinned }
+    dispatch({ type: 'UPDATE_ITEM', payload })
     setVisible(false)
-    console.log('SPACETAG: DotMenu.js PINNING')
   }
-  const unPinTask = e => {
-    e.stopPropagation()
-    setVisible(false)
-    console.log('SPACETAG: DotMenu.js UN-PINNING')
-  }
+  // const unPinTask = e => {
+  //   e.stopPropagation()
+  //   setVisible(false)
+  //   console.log('SPACETAG: TaskItemMenu.js UN-PINNING')
+  // }
   const addMemo = e => {
     e.stopPropagation()
     setVisible(false)
-    console.log('SPACETAG: DotMenu.js ADDING MEMO')
+    console.log('SPACETAG: TaskItemMenu.js ADDING MEMO')
   }
   const deleteTask = e => {
     e.stopPropagation()
     setVisible(false)
-    console.log('SPACETAG: DotMenu.js DELETING')
+    console.log('SPACETAG: TaskItemMenu.js DELETING')
   }
   useOuterClickNotifier(toggleVisible, innerRef)
 
@@ -40,13 +44,13 @@ const DotMenu = ({ task }) => {
         <div ref={innerRef} className="dot-menu">
           <i className="icon-up-dir" />
           {!task.pinned && (
-            <div className="clickable pin-to-top" onClick={pinTask}>
+            <div className="clickable pin-to-top" onClick={togglePin}>
               <i className="icon-pinboard" />
               Pin task
             </div>
           )}
           {task.pinned && (
-            <div className="clickable unpin-to-top" onClick={unPinTask}>
+            <div className="clickable unpin-to-top" onClick={togglePin}>
               <i className="icon-pinboard" />
               Un-pin task
             </div>
@@ -66,4 +70,4 @@ const DotMenu = ({ task }) => {
     </>
   )
 }
-export default DotMenu
+export default TaskItemMenu
