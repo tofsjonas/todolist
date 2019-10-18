@@ -19,18 +19,32 @@ const initialState = [
 var parsedData = []
 export const getTaskList = callback => {
   setTimeout(() => {
-    // var localData = localStorage.getItem('tasklist') || []
-    // parsedData = JSON.parse(localData)
-    // callback(parsedData)
+    var localData = localStorage.getItem('tasklist') || []
+    parsedData = JSON.parse(localData)
+    callback(parsedData)
 
-    callback(initialState)
+    // callback(initialState)
   }, 550)
 }
 
-export const createListItem = (vals, callback) => {}
+export const createListItem = (item, callback) => {
+  parsedData.unshift(item)
+  localStorage.setItem('tasklist', JSON.stringify(parsedData))
+}
+
+export const deleteListItem = (_id, callback) => {
+  // var localData = localStorage.getItem('tasklist') || []
+  // var parsedData = JSON.parse(localData)
+  const newData = parsedData.filter(item => item._id !== _id)
+  localStorage.setItem('tasklist', JSON.stringify(newData))
+}
+
 export const updateListItem = (item, callback) => {
-  const newData = parsedData.map(stored_item => {
-    return item._id === stored_item._id ? item : stored_item
+  // var localData = localStorage.getItem('tasklist') || []
+  // var parsedData = JSON.parse(localData)
+
+  const newData = parsedData.map(storedItem => {
+    return item._id === storedItem._id ? item : storedItem
   })
   localStorage.setItem('tasklist', JSON.stringify(newData))
 }

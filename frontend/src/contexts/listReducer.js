@@ -9,6 +9,10 @@ export const listReducer = (state, action) => {
         return item._id === updatedItem._id ? updatedItem : item
       })
     }
+    case 'DELETE_ITEM': {
+      const deletedItem = action.payload
+      return state.filter(item => item._id !== deletedItem._id)
+    }
     default:
       return state
   }

@@ -1,17 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react'
 import TaskItem from './TaskItem'
-import { ListContext } from '../contexts/ListContext'
+import { ListContext } from 'contexts/ListContext'
 const TaskList = () => {
   const { tasklist } = useContext(ListContext)
 
   const [pinned, setPinned] = useState([])
   const [normal, setNormal] = useState([])
   useEffect(() => {
-    console.log('SPACETAG: TaskList.js TASKLIST CHANGED')
-    const pinned = tasklist.filter(task => task.pinned)
-    const normal = tasklist.filter(task => !task.pinned)
-    setPinned(pinned)
-    setNormal(normal)
+    const pinnedList = tasklist.filter(task => task.pinned)
+    const normalList = tasklist.filter(task => !task.pinned)
+    setPinned(pinnedList)
+    setNormal(normalList)
   }, [tasklist])
 
   var zIndex = 1000
@@ -22,7 +21,7 @@ const TaskList = () => {
         <>
           {pinned.map(task => {
             zIndex -= 2 // otherwise the dot-menu will be troublesome...
-            return <TaskItem key={zIndex} task={task} zIndex={zIndex} />
+            return <TaskItem key={task._id} task={task} zIndex={zIndex} />
           })}
           <hr />
         </>
@@ -31,7 +30,7 @@ const TaskList = () => {
         <>
           {normal.map(task => {
             zIndex -= 2 // otherwise the dot-menu will be troublesome...
-            return <TaskItem key={zIndex} task={task} zIndex={zIndex} />
+            return <TaskItem key={task._id} task={task} zIndex={zIndex} />
           })}
         </>
       )}

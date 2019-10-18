@@ -1,11 +1,12 @@
 import React, { useState, useRef, useContext, useEffect } from 'react'
 import useOuterClickNotifier from '../lib/useOuterClickNotifier'
 import { ListContext } from '../contexts/ListContext'
+import { updateListItem, deleteListItem } from '../lib/storage'
 
 const TaskItemMenu = ({ task }) => {
-  useEffect(() => {
-    console.log('SPACETAG: TaskItemMenu.js TASK CHANGED')
-  }, [task])
+  // useEffect(() => {
+  //   console.log('SPACETAG: TaskItemMenu.js TASK CHANGED')
+  // }, [task])
 
   const { dispatch } = useContext(ListContext)
 
@@ -20,12 +21,8 @@ const TaskItemMenu = ({ task }) => {
     const payload = { ...task, pinned: !task.pinned }
     dispatch({ type: 'UPDATE_ITEM', payload })
     setVisible(false)
+    updateListItem(payload)
   }
-  // const unPinTask = e => {
-  //   e.stopPropagation()
-  //   setVisible(false)
-  //   console.log('SPACETAG: TaskItemMenu.js UN-PINNING')
-  // }
   const addMemo = e => {
     e.stopPropagation()
     setVisible(false)
@@ -33,7 +30,9 @@ const TaskItemMenu = ({ task }) => {
   }
   const deleteTask = e => {
     e.stopPropagation()
+    dispatch({ type: 'DELETE_ITEM', payload: task })
     setVisible(false)
+    deleteListItem(task._id)
     console.log('SPACETAG: TaskItemMenu.js DELETING')
   }
   useOuterClickNotifier(toggleVisible, innerRef)
