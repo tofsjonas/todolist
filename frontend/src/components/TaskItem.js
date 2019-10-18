@@ -1,26 +1,21 @@
 import React, { useState, useEffect, useContext, useRef } from 'react'
 import TaskItemMenu from './TaskItemMenu'
-import { ListContext } from '../contexts/ListContext'
-import { updateListItem } from '../lib/storage'
+import { ListContext } from 'contexts/ListContext'
+import { updateListItem } from 'lib/storage'
 const TaskItem = ({ task, zIndex }) => {
-  const didMount = useRef(false)
   const { dispatch } = useContext(ListContext)
-  const [title, setTitle] = useState(task.title)
-  const [memo, setMemo] = useState(task.memo)
-  const [pinned, setPinned] = useState(task.pinned || false)
-  const [checked, setChecked] = useState(task.checked || false)
+  const [title, setTitle] = useState('')
+  const [memo, setMemo] = useState()
+  const [checked, setChecked] = useState(false)
   const handleBlur = () => {
     save()
   }
 
   useEffect(() => {
-    if (!didMount.current) return
-    save()
-  }, [pinned, checked])
-
-  useEffect(() => {
-    didMount.current = true
-  }, [])
+    setTitle(task.title)
+    setMemo(task.memo)
+    setChecked(task.checked || false)
+  }, [task])
 
   const handleKeyDown = e => {
     if (e.key === 'Enter') {
@@ -29,10 +24,15 @@ const TaskItem = ({ task, zIndex }) => {
     }
   }
   const save = () => {
-    const payload = { ...task, title, memo, pinned, checked }
-    console.log('SPACETAG: TaskItem.js SAVING!!!')
-    dispatch({ type: 'UPDATE_ITEM', payload })
-    updateListItem(payload)
+    const payload = { ...task, checked, memo, title }
+    if (!memo) {
+      delete payload.memo
+    }
+    if (JSON.stringify(task) != JSON.stringify(payload)) {
+      dispatch({ type: 'UPDATE_ITEM', payload })
+      updateListItem(payload)
+      // console.log('SPACETAG: TaskItem.js SAVING!!!')
+    }
   }
 
   const handleTitleChange = e => {
@@ -43,22 +43,17 @@ const TaskItem = ({ task, zIndex }) => {
   }
   const toggleChecked = () => {
     setChecked(!checked)
-    // save()
   }
-  // const togglePinned = () => {
-  //   setPinned(!pinned)
-  //   // save()
-  // }
 
   return (
     <div className={'task' + (checked ? ' done' : '')} style={{ zIndex: zIndex }}>
-      <div className="pin">{pinned && <i className="icon-pinboard" />}</div>
+      <div className="pin">{task.pinned && <i className="icon-pinboard" />}</div>
       <div className="check clickable" onClick={toggleChecked}>
         {checked && <i className="icon-ok" />}
       </div>
       <div className="description">
-        <input type="text" maxLength="50" onKeyDown={handleKeyDown} className="title" onBlur={handleBlur} required placeholder="Rename task..." value={title} onChange={handleTitleChange} />
-        {memo && <input type="text" onKeyDown={handleKeyDown} maxLength="50" onBlur={handleBlur} className="memo" placeholder="Edit memo..." value={memo} onChange={handleMemoChange} />}
+        <input type="text" onKeyDown={handleKeyDown} maxLength="50" onBlur={handleBlur} value={title} placeholder="Rename task..." onChange={handleTitleChange} className="title" required />
+        {typeof memo !== 'undefined' && <input type="text" onKeyDown={handleKeyDown} maxLength="50" onBlur={handleBlur} className={'memo' + (typeof memo !== 'undefined' ? ' active' : '')} placeholder="Add a memo..." value={memo || ''} onChange={handleMemoChange} />}
       </div>
       <div className="dots">
         <TaskItemMenu task={task} />
@@ -67,3 +62,8 @@ const TaskItem = ({ task, zIndex }) => {
   )
 }
 export default TaskItem
+//         <input type="text" onKeyDown={handleKeyDown} maxLength="50" onBlur={handleBlur} value={memo} placeholder="Edit memo..." onChange={handleMemoChange} className={'memo' + (memo.length > 0 ? ' active' : '')} />
+
+//        <input type="text" onKeyDown={handleKeyDown} maxLength="50" onBlur={handleBlur} className={'memo' + (typeof memo !== 'undefined' ? ' active' : '')} placeholder="Edit memo..." value={memo} onChange={handleMemoChange} />
+
+// {typeof memo !== 'undefined' && <input type="text" onKeyDown={handleKeyDown} maxLength="50" onBlur={handleBlur} className="memo" placeholder="Edit memo..." value={memo} onChange={handleMemoChange} />}

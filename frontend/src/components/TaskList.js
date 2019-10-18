@@ -10,6 +10,7 @@ const TaskList = () => {
     const pinnedList = tasklist.filter(task => task.pinned)
     const normalList = tasklist.filter(task => !task.pinned)
     setPinned(pinnedList)
+    // console.log('SPACETAG: TaskList.js', pinnedList)
     setNormal(normalList)
   }, [tasklist])
 

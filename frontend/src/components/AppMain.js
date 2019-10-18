@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react'
 import TaskList from './TaskList'
-import { getTaskList } from '../lib/storage'
+import { getTaskList } from 'lib/storage'
 import Spinner from './Spinner'
-import { ListContext } from '../contexts/ListContext'
+import { ListContext } from 'contexts/ListContext'
 
 const AppMain = () => {
   const { tasklist, dispatch } = useContext(ListContext)
@@ -11,7 +11,6 @@ const AppMain = () => {
   useEffect(() => {
     getTaskList(tasklist => {
       dispatch({ type: 'SET_LIST', payload: tasklist })
-      // setTasks(tasklist)
       setLoading(false)
     })
   }, [])

@@ -53,5 +53,9 @@
   .memo {
     color: $gray-100;
     font-size: 0.7em;
+    // display: none;
+    // &.active {
+    //   display: inherit;
+    // }
   }
 }
