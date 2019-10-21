@@ -1,4 +1,4 @@
-.add-task {
+.add-task-input-container {
   color: $gray-300;
   display: flex;
   border: 1px solid $gray-700;
@@ -12,15 +12,48 @@
     margin: auto 0;
   }
   input {
+    font-size: 0.9em;
     // transition: all 0.2s ease-out;
     height: 2em;
     color: $white;
     background: transparent;
+    width: 100%;
     // width: 18em;
     border: 0;
     &:focus {
       color: $gray-000;
       // width: 22em;
     }
+  }
+}
+.add-task {
+  border: 1px solid $gray-300;
+  border-radius: $border-radius-large;
+  padding: 0.3em;
+  .buttons {
+    button {
+      cursor: pointer;
+      border-radius: $border-radius-large;
+      border: 1px solid black;
+      font-size: 0.8em;
+      width: 6em;
+      height: 2em;
+      margin: 0 1em;
+      text-transform: uppercase;
+      &:disabled {
+        cursor: not-allowed;
+      }
+    }
+
+    // .ok {
+    //   color: $pink-100;
+    // }
+  }
+}
+
+.task-details {
+  display: none;
+  &.active {
+    display: inherit;
   }
 }

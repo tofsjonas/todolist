@@ -2,6 +2,16 @@ import axios from 'axios'
 var loc = window.location
 const serverUrl = loc.hostname === 'localhost' ? 'http://localhost:3002/todo' : loc.protocol + '//' + loc.host
 
+const uniqueId = () => {
+  return (
+    'i' +
+    Date.now() +
+    Math.random()
+      .toString()
+      .slice(2, 12)
+  )
+}
+
 const initialState = [
   { _id: '123450', title: 'todostuff 1', when: '2018-02-08' },
   { _id: '123451', title: 'todostuff 2', memo: 'pelle svanslös', when: '2019-10-05' },
@@ -16,32 +26,36 @@ const initialState = [
 
 // var data = JSON.stringify(initialState)
 // localStorage.setItem('tasklist', data)
-var parsedData = []
-export const getTaskList = callback => {
-  setTimeout(() => {
-    var localData = localStorage.getItem('tasklist') || []
-    parsedData = JSON.parse(localData)
-    callback(parsedData)
 
-    // callback(initialState)
-  }, 550)
+export const getTaskList = callback => {
+  var localData = localStorage.getItem('tasklist') || []
+  var parsedData = JSON.parse(localData)
+  setTimeout(() => {
+    callback(parsedData)
+  }, 200)
 }
 
 export const createListItem = (item, callback) => {
+  var localData = localStorage.getItem('tasklist') || []
+  var parsedData = JSON.parse(localData)
+  item._id = uniqueId()
   parsedData.unshift(item)
   localStorage.setItem('tasklist', JSON.stringify(parsedData))
+  setTimeout(() => {
+    callback(item)
+  }, 200)
 }
 
 export const deleteListItem = (_id, callback) => {
-  // var localData = localStorage.getItem('tasklist') || []
-  // var parsedData = JSON.parse(localData)
+  var localData = localStorage.getItem('tasklist') || []
+  var parsedData = JSON.parse(localData)
   const newData = parsedData.filter(item => item._id !== _id)
   localStorage.setItem('tasklist', JSON.stringify(newData))
 }
 
 export const updateListItem = (item, callback) => {
-  // var localData = localStorage.getItem('tasklist') || []
-  // var parsedData = JSON.parse(localData)
+  var localData = localStorage.getItem('tasklist') || []
+  var parsedData = JSON.parse(localData)
 
   const newData = parsedData.map(storedItem => {
     return item._id === storedItem._id ? item : storedItem

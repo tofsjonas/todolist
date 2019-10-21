@@ -3,27 +3,26 @@ import TaskList from './TaskList'
 import { getTaskList } from 'lib/storage'
 import Spinner from './Spinner'
 import { ListContext } from 'contexts/ListContext'
+import AddTask from './AddTask'
 
 const AppMain = () => {
   const { tasklist, dispatch } = useContext(ListContext)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    getTaskList(tasklist => {
-      dispatch({ type: 'SET_LIST', payload: tasklist })
+    console.log('SPACETAG: AppMain.js SETTING DATA')
+    getTaskList(data => {
+      dispatch({ type: 'SET_LIST', payload: data })
       setLoading(false)
     })
   }, [])
 
   return (
     <main className="app-main">
-      <div className="add-task">
-        <i className="icon-article" />
-        <input type="text" placeholder="Add a task..." />
-      </div>
+      <AddTask />
       {loading && <Spinner />}
       {!loading && tasklist.length > 0 && <TaskList />}
-      {!loading && tasklist.length <= 0 && <div>No tasklist! Binge time! :)</div>}
+      {!loading && tasklist.length <= 0 && <div>No tasks! Binge time! :)</div>}
     </main>
   )
 }

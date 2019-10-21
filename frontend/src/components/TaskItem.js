@@ -28,6 +28,8 @@ const TaskItem = ({ task, zIndex }) => {
     if (!memo) {
       delete payload.memo
     }
+
+    // eslint-disable-next-line eqeqeq
     if (JSON.stringify(task) != JSON.stringify(payload)) {
       dispatch({ type: 'UPDATE_ITEM', payload })
       updateListItem(payload)

@@ -9,6 +9,12 @@ export const listReducer = (state, action) => {
         return item._id === updatedItem._id ? updatedItem : item
       })
     }
+    case 'CREATE_ITEM': {
+      const item = action.payload
+      const temp = [...state]
+      temp.unshift(item)
+      return temp
+    }
     case 'DELETE_ITEM': {
       const deletedItem = action.payload
       return state.filter(item => item._id !== deletedItem._id)

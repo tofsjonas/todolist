@@ -6,12 +6,13 @@
   // ratio = 540/420 = 1.285714
   min-height: calc((540 / 420) * #{$app-width});
   padding-bottom: 4em;
+  margin: 4em auto;
 
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+  // position: absolute;
+  // left: 50%;
+  // top: 50%;
+  // -webkit-transform: translate(-50%, -50%);
+  // transform: translate(-50%, -50%);
 }
 .app-main {
   // color: $gray-100;
