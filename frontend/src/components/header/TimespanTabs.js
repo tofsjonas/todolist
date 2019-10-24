@@ -2,11 +2,18 @@ import React, { useContext } from 'react'
 import { DateContext } from 'contexts/DateContext'
 import { getTimeSpanDates } from 'lib/dateFunctions'
 const TimespanTabs = () => {
-  const { timespan, startDate, dispatch } = useContext(DateContext)
+  const { timespan, currentDate, dispatch } = useContext(DateContext)
 
   const setTimespan = span => {
-    const newDates = getTimeSpanDates(startDate, span)
-    dispatch({ type: 'SET_DATE', payload: { ...newDates, timespan: span } })
+    const { startDate, endDate } = getTimeSpanDates(currentDate, span)
+    dispatch({ type: 'SET_DATE', payload: { startDate, endDate, timespan: span } })
+
+    // const newDates = getTimeSpanDates(currentDate, span)
+    // console.log('SPACETAG: TimespanTabs.js', { ...newDates, timespan: span })
+    // dispatch({ type: 'SET_DATE', payload: { ...newDates, timespan: span } })
+    // const newDates = getTimeSpanDates(currentDate, span)
+    // console.log('SPACETAG: TimespanTabs.js', { ...newDates, timespan: span })
+    //dispatch({ type: 'SET_DATE', payload: { timespan: span } })
   }
 
   return (

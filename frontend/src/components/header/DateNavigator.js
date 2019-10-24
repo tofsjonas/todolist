@@ -1,28 +1,28 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { DateContext } from 'contexts/DateContext'
-import { dateAdd, getLocaleDateString, getTimeSpanDates, getNameOfDay, getWeekNumber, getNameOfMonth } from 'lib/dateFunctions'
+import { dateAdd, getLocaleDateString, getTimeSpanDates, getNameOfDay, getNameOfMonth } from 'lib/dateFunctions'
 import { getNameOfWeek } from '../../lib/dateFunctions'
 const DateNavigator = () => {
-  const { timespan, startDate, endDate, dispatch } = useContext(DateContext)
+  const { timespan, currentDate, startDate, endDate, dispatch } = useContext(DateContext)
   const [title, setTitle] = useState('')
   const [dateDetails, setDateDetails] = useState('')
 
   useEffect(() => {
     switch (timespan) {
       case 'day':
-        const day = getNameOfDay(startDate)
+        const day = getNameOfDay(currentDate)
         setTitle(day)
         break
       case 'week':
-        const week = getNameOfWeek(startDate)
+        const week = getNameOfWeek(currentDate)
         setTitle(week)
         break
       case 'month':
-        const month = getNameOfMonth(startDate)
+        const month = getNameOfMonth(currentDate)
         setTitle(month)
         break
       case 'year':
-        const year = startDate.getFullYear()
+        const year = currentDate.getFullYear()
         setTitle(year)
         break
       default:
@@ -31,9 +31,10 @@ const DateNavigator = () => {
 
     const startDateLocaleString = getLocaleDateString(startDate)
     const endDateLocaleString = getLocaleDateString(endDate)
-
     setDateDetails(startDateLocaleString + ' - ' + endDateLocaleString)
-  }, [timespan, startDate, endDate])
+  }, [timespan, currentDate, startDate, endDate])
+
+  useEffect(() => {}, [timespan])
 
   const stepRight = () => {
     _step('right')
@@ -43,11 +44,9 @@ const DateNavigator = () => {
   }
 
   const _step = direction => {
-    var tempStartDate = dateAdd(startDate, direction === 'left' ? -1 : 1, timespan)
-
-    const newDates = getTimeSpanDates(tempStartDate, timespan)
-
-    dispatch({ type: 'SET_DATE', payload: { ...newDates } })
+    var newCurrentDate = dateAdd(currentDate, direction === 'left' ? -1 : 1, timespan)
+    const newDates = getTimeSpanDates(newCurrentDate, timespan)
+    dispatch({ type: 'SET_DATE', payload: { ...newDates, currentDate: newCurrentDate } })
   }
 
   return (

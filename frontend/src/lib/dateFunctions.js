@@ -50,25 +50,23 @@ export const getNameOfWeek = date => {
 export const getTimeSpanDates = (date, timespan) => {
   var year = date.getFullYear()
   var month = date.getMonth()
-  var dayOfMonth = date.getDate()
-  var dayOfWeek = date.getDay()
-  var startDate = date
-  var endDate = date
+  var startDate = new Date(date)
+  var endDate = new Date(date)
   switch (timespan) {
     // case 'day': // startDate == endDate
     //   break
 
     case 'week': // https://stackoverflow.com/questions/5210376/how-to-get-first-and-last-day-of-the-week-in-javascript/26922029
-      startDate = new Date(date.setDate(dayOfMonth - dayOfWeek))
-      endDate = new Date(date.setDate(dayOfMonth - dayOfWeek + 6))
+      startDate.setDate(date.getDate() - date.getDay())
+      endDate.setDate(date.getDate() - date.getDay() + 6)
       break
     case 'month': // https://stackoverflow.com/questions/222309/calculate-last-day-of-month-in-javascript
-      startDate = new Date(date.setDate(1))
-      endDate = new Date(date.setFullYear(year, month + 1, 0))
+      startDate.setDate(1)
+      endDate.setFullYear(year, month + 1, 0)
       break
     case 'year':
-      startDate = new Date(date.setFullYear(year, 0, 1))
-      endDate = new Date(date.setFullYear(year, 11, 31))
+      startDate.setFullYear(year, 0, 1)
+      endDate.setFullYear(year, 11, 31)
       break
     default:
       break

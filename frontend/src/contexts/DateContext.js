@@ -2,21 +2,15 @@ import React, { createContext, useReducer } from 'react'
 import { dateReducer } from './dateReducer'
 import { getTimeSpanDates } from 'lib/dateFunctions'
 
-var timespan = 'week'
-var day = new Date()
-// var year = day.getFullYear()
-var month = day.getMonth()
-var dayOfMonth = day.getDate()
-var dayOfWeek = day.getDay()
-var { startDate, endDate } = getTimeSpanDates(day, timespan)
+var timespan = 'day'
+var currentDate = new Date('Mon, 30 Dec 2019')
+var { startDate, endDate } = getTimeSpanDates(currentDate, timespan)
+
 const initialState = {
   timespan,
+  currentDate,
   startDate,
   endDate,
-  day,
-  month,
-  dayOfMonth,
-  dayOfWeek,
 }
 
 export const DateContext = createContext()
