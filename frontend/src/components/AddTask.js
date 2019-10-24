@@ -11,7 +11,7 @@ const AddTask = () => {
   const [selectedDay, setSelectedDay] = useState(new Date())
   const [title, setTitle] = useState('A task!')
   const [savable, setSavable] = useState('')
-  const [active, setActive] = useState(true)
+  const [active, setActive] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
 
   const innerRef = useRef(null)
@@ -34,15 +34,11 @@ const AddTask = () => {
   const handleSave = () => {
     setIsSaving(true)
     const item = { title, when: selectedDay.toISOString().substr(0, 10) }
-    // console.log('SPACETAG: AddTask.js SAVING!')
-
     createListItem(item, data => {
       dispatch({ type: 'CREATE_ITEM', payload: data })
       setIsSaving(false)
       clearForm()
     })
-
-    // console.log('SPACETAG: AddTask.js SAVING!', savable)
   }
   const clearForm = () => {
     setSelectedDay(null)
@@ -61,17 +57,15 @@ const AddTask = () => {
   }
   useOuterClickNotifier(hideDetails, innerRef)
 
-  //
-
   return (
-    <div className="add-task" ref={innerRef}>
+    <div className={'add-task' + (active ? ' active' : '')} ref={innerRef}>
       <div className="add-task-input-container">
         <i className="icon-article" />
         <input onFocus={handleFocus} type="text" placeholder="Add a task..." value={title} onChange={handleTitleChange} />
       </div>
       {isSaving && <Spinner />}
       {!isSaving && (
-        <div className={'task-details' + (active ? ' active' : '')}>
+        <div className="task-details">
           <p>{selectedDay ? selectedDay.toLocaleDateString() : 'Please select a day 👻'}</p>
           <DayPicker fromMonth={new Date()} showWeekNumbers todayButton="Go to Today" onDayClick={handleDayClick} selectedDays={selectedDay} />
           <div className="buttons">

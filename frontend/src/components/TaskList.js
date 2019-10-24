@@ -7,7 +7,7 @@ const TaskList = () => {
   const [pinned, setPinned] = useState([])
   const [normal, setNormal] = useState([])
   useEffect(() => {
-    console.log('SPACETAG: TaskList.js TASK LIST UPDATED!')
+    // console.log('SPACETAG: TaskList.js TASK LIST UPDATED!')
     const pinnedList = tasklist.filter(task => task.pinned)
     const normalList = tasklist.filter(task => !task.pinned)
     setPinned(pinnedList)

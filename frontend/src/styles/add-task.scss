@@ -27,9 +27,7 @@
   }
 }
 .add-task {
-  border: 1px solid $gray-300;
-  border-radius: $border-radius-large;
-  padding: 0.3em;
+  padding: 0.35em;
   .buttons {
     button {
       cursor: pointer;
@@ -49,11 +47,16 @@
     //   color: $pink-100;
     // }
   }
-}
+  .task-details {
+    display: none;
+  }
 
-.task-details {
-  display: none;
   &.active {
-    display: inherit;
+    padding: 0.3em;
+    border: 0.05em solid $gray-300;
+    border-radius: $border-radius-large;
+    .task-details {
+      display: inherit;
+    }
   }
 }

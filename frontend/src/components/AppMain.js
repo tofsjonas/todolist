@@ -10,7 +10,7 @@ const AppMain = () => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    console.log('SPACETAG: AppMain.js SETTING DATA')
+    // console.log('SPACETAG: AppMain.js SETTING DATA')
     getTaskList(data => {
       dispatch({ type: 'SET_LIST', payload: data })
       setLoading(false)
