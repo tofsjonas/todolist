@@ -4,9 +4,11 @@ import useOuterClickNotifier from 'lib/useOuterClickNotifier'
 import { createListItem } from 'lib/storage'
 import { ListContext } from 'contexts/ListContext'
 import Spinner from './Spinner'
+import { DateContext } from 'contexts/DateContext'
 
 const AddTask = () => {
   const { dispatch } = useContext(ListContext)
+  const { startDate } = useContext(DateContext)
 
   const [selectedDay, setSelectedDay] = useState(new Date())
   const [title, setTitle] = useState('A task!')
@@ -15,6 +17,11 @@ const AddTask = () => {
   const [isSaving, setIsSaving] = useState(false)
 
   const innerRef = useRef(null)
+
+  // useEffect(() => {
+  //   setSelectedDay(startDate)
+  // }, [startDate])
+
   const hideDetails = () => {
     setActive(false)
   }
@@ -22,10 +29,6 @@ const AddTask = () => {
   const handleDayClick = (day, { selected }) => {
     setSelectedDay(selected ? undefined : day)
   }
-
-  useEffect(() => {
-    setSavable(isSavable())
-  }, [selectedDay, title])
 
   const handleTitleChange = e => {
     setTitle(e.target.value)
@@ -46,17 +49,21 @@ const AddTask = () => {
     setActive(false)
   }
 
-  const isSavable = params => {
-    if (title.trim().length === 0) return false
-    if (typeof selectedDay === 'undefined') return false
-    return true
-  }
-
-  const handleFocus = params => {
+  const handleFocus = () => {
     setActive(true)
   }
   useOuterClickNotifier(hideDetails, innerRef)
+  useEffect(() => {
+    const isSavable = () => {
+      if (title.trim().length === 0) return false
+      if (typeof selectedDay === 'undefined') return false
+      return true
+    }
+    // const savable = isSavable()
+    setSavable(isSavable())
+  }, [selectedDay, title])
 
+  // fromMonth={new Date()}
   return (
     <div className={'add-task' + (active ? ' active' : '')} ref={innerRef}>
       <div className="add-task-input-container">
@@ -67,7 +74,7 @@ const AddTask = () => {
       {!isSaving && (
         <div className="task-details">
           <p>{selectedDay ? selectedDay.toLocaleDateString() : 'Please select a day 👻'}</p>
-          <DayPicker fromMonth={new Date()} showWeekNumbers todayButton="Go to Today" onDayClick={handleDayClick} selectedDays={selectedDay} />
+          <DayPicker month={startDate} showWeekNumbers todayButton="Go to Today" onDayClick={handleDayClick} selectedDays={selectedDay} />
           <div className="buttons">
             <button className="cancel" onClick={clearForm}>
               Cancel

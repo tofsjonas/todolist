@@ -1,16 +1,17 @@
-// export function getMonday(d) {
-//   d = new Date(d)
-//   var day = d.getDay(),
-//     diff = d.getDate() - day + (day === 0 ? -6 : 1) // adjust when day is sunday
-//   return new Date(d.setDate(diff))
-// }
+// const browserLanguage = navigator.language || navigator.userLanguage || 'en-GB'
+const browserLanguage = 'en-GB'
 
-// export const getSunday = d => {
-//   // var d = new Date(date)
-//   var day = d.getDay()
-//   var diff = d.getDate() - day + (day === 0 ? -6 : 1) // adjust when day is sunday
-//   return new Date(d.setDate(diff - 1))
-// }
+//https://weeknumber.net/how-to/javascript
+export const getWeekNumber = d => {
+  var date = new Date(d.getTime())
+  date.setHours(0, 0, 0, 0)
+  // Thursday in current week decides the year.
+  date.setDate(date.getDate() + 3 - ((date.getDay() + 6) % 7))
+  // January 4 is always in week 1.
+  var week1 = new Date(date.getFullYear(), 0, 4)
+  // Adjust to Thursday in week 1 and count number of weeks from date to week1.
+  return 1 + Math.round(((date.getTime() - week1.getTime()) / 86400000 - 3 + ((week1.getDay() + 6) % 7)) / 7)
+}
 
 export const getSunday = date => {
   // var d = new Date(date)
@@ -18,6 +19,32 @@ export const getSunday = date => {
   var dayOfWeek = date.getDay()
   var diff = dayOfMonth - dayOfWeek + (dayOfWeek === 0 ? -6 : 1) // adjust when day is sunday
   return new Date(date.setDate(diff - 1))
+}
+
+export const getNameOfDay = date => {
+  var options = { weekday: 'long' }
+  return date.toLocaleDateString(browserLanguage, options)
+}
+export const getNameOfMonth = date => {
+  var options = { month: 'long' }
+  return date.toLocaleDateString(browserLanguage, options)
+}
+
+//overkill
+// var namesOfWeek = {
+//   'sv-SE': 'vecka',
+//   'en-GB': 'week',
+// }
+// var namesOfDay = {
+//   'sv-SE': 'dag',
+//   'en-GB': 'day',
+// }
+
+export const getNameOfWeek = date => {
+  var weekNumber = getWeekNumber(date)
+  var weekName = 'week ' + weekNumber
+  // var weekName = (namesOfWeek[browserLanguage] || namesOfWeek['en-GB']) + ' ' + weekNumber
+  return weekName
 }
 
 export const getTimeSpanDates = (date, timespan) => {
@@ -56,7 +83,6 @@ export const getTimeSpanDates = (date, timespan) => {
 
 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString
 export const getLocaleDateString = date => {
-  const browserLanguage = navigator.language || navigator.userLanguage || 'en-GB'
   var options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }
   return date.toLocaleDateString(browserLanguage, options)
 }
@@ -85,7 +111,6 @@ export const dateAdd = (date, count, timespan) => {
   }
   return tempDate
 }
-const dateSub = params => {}
 // var date = new Date('Fri Oct 25 2019 09:45:05 GMT+0200')
 // console.log('SPACETAG: dateFunctions.js', getLocaleDateString(date))
 // date = dateAdd(date, -1, 'day')
