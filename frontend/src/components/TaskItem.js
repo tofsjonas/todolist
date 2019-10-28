@@ -4,7 +4,7 @@ import { ListContext } from 'contexts/ListContext'
 import { updateListItem } from 'lib/storage'
 const TaskItem = ({ task, zIndex }) => {
   const { dispatch } = useContext(ListContext)
-  const [title, setTitle] = useState('')
+  const [title, setTitle] = useState(' ')
   const [memo, setMemo] = useState()
   const [checked, setChecked] = useState(false)
   const handleBlur = () => {
