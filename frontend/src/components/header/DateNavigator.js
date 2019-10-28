@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { DateContext } from 'contexts/DateContext'
-import { dateAdd, getLocaleDateString, getTimeSpanDates, getNameOfDay, getNameOfMonth } from 'lib/dateFunctions'
-import { getNameOfWeek } from '../../lib/dateFunctions'
+import { dateAdd, getLocaleDateString, getTimeSpanDates, getNameOfDay, getNameOfMonth, getNameOfWeek } from 'lib/dateFunctions'
 const DateNavigator = () => {
   const { timespan, currentDate, startDate, endDate, dispatch } = useContext(DateContext)
   const [title, setTitle] = useState('')
@@ -29,9 +28,10 @@ const DateNavigator = () => {
         break
     }
 
-    const startDateLocaleString = getLocaleDateString(startDate)
-    const endDateLocaleString = getLocaleDateString(endDate)
-    setDateDetails(startDateLocaleString + ' - ' + endDateLocaleString)
+    const start = getLocaleDateString(startDate)
+    const end = getLocaleDateString(endDate)
+    const dateString = start === end ? start : start + ' - ' + end
+    setDateDetails(dateString)
   }, [timespan, currentDate, startDate, endDate])
 
   useEffect(() => {}, [timespan])
@@ -52,7 +52,7 @@ const DateNavigator = () => {
   return (
     <div className="date-navigator">
       <i className="navigator clickable icon-left-open-big" onClick={stepLeft} />
-      <div className="date-title" style={{ flex: 3 }}>
+      <div className="date-title">
         <div className="title">{title}</div>
         <div className="sub-title">{dateDetails}</div>
       </div>
