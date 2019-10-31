@@ -1,6 +1,6 @@
 import axios from 'axios'
 var loc = window.location
-const serverUrl = loc.hostname === 'localhost' ? 'http://localhost:3002/todo' : loc.protocol + '//' + loc.host + '/todo'
+const serverUrl = (loc.hostname === 'localhost' ? 'http://localhost:3003' : loc.protocol + '//' + loc.host) + '/todo'
 
 export const getTaskList = (success, fail) => {
   axios
