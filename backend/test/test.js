@@ -65,7 +65,7 @@ describe('Database', function() {
   })
   describe('addListItem', function() {
     it('should add an item to "testlist" with the title "todo item"', function(done) {
-      addListItem({ list_id: testList._id, data: { title: 'A task! yay!', when: new Date(), memo: 'gurgel' } })
+      addListItem({ list_id: testList._id, data: { title: 'A task! yay!', when: new Date().toISOString().substr(0, 10), memo: 'gurgel' } })
         .then(item => {
           testItem = item
           assert.equal(item.title, 'A task! yay!')

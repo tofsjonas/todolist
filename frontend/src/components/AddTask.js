@@ -1,18 +1,20 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
 import DayPicker from 'react-day-picker'
-import useOuterClickNotifier from 'lib/useOuterClickNotifier'
 import { createListItem } from 'lib/storage'
 import { ListContext } from 'contexts/ListContext'
-import Spinner from './Spinner'
 import { DateContext } from 'contexts/DateContext'
+import { useErrorOutlet } from 'contexts/ErrorContext'
+import useOuterClickNotifier from 'lib/useOuterClickNotifier'
+import Spinner from 'components/Spinner'
 
 const AddTask = () => {
   const { dispatch } = useContext(ListContext)
   const { startDate } = useContext(DateContext)
+  const setError = useErrorOutlet()
 
   const [selectedDay, setSelectedDay] = useState(new Date())
   const [title, setTitle] = useState('A task!')
-  const [savable, setSavable] = useState('')
+  const [savable, setSavable] = useState(false)
   const [active, setActive] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
 
@@ -36,12 +38,19 @@ const AddTask = () => {
 
   const handleSave = () => {
     setIsSaving(true)
-    const item = { title, when: selectedDay.toISOString().substr(0, 10) }
-    createListItem(item, data => {
-      dispatch({ type: 'CREATE_ITEM', payload: data })
-      setIsSaving(false)
-      clearForm()
-    })
+    const data = { title, when: selectedDay.toISOString().substr(0, 10) }
+    createListItem(
+      data,
+      item => {
+        dispatch({ type: 'CREATE_ITEM', payload: item })
+        setIsSaving(false)
+        clearForm()
+      },
+      err => {
+        setIsSaving(false)
+        setError(err)
+      }
+    )
   }
   const clearForm = () => {
     setSelectedDay(null)

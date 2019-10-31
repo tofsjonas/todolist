@@ -5,10 +5,10 @@ import { Schema, model } from 'mongoose'
 const listItemSchema = new Schema(
   {
     title: { type: String, required: true, default: 'todo item' },
-    memo: { type: String, default: '' },
+    memo: { type: String },
     checked: { type: Boolean, required: true, default: false },
     pinned: { type: Boolean, required: true, default: false },
-    when: { type: Date, required: true },
+    when: { type: String, required: true },
   },
   { timestamps: true }
 )

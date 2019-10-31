@@ -2,14 +2,17 @@ import React from 'react'
 import './fontello/css/fontello.css'
 import AuthContextProvider from './contexts/AuthContext'
 import Main from './Main'
+import { ErrorDisplayBoundary } from 'contexts/ErrorContext'
 
 function App() {
   // console.log('SPACETAG: App.js', process.env.NODE_ENV)
   return (
     <div className="app">
-      <AuthContextProvider>
-        <Main />
-      </AuthContextProvider>
+      <ErrorDisplayBoundary>
+        <AuthContextProvider>
+          <Main />
+        </AuthContextProvider>
+      </ErrorDisplayBoundary>
     </div>
   )
   // try {

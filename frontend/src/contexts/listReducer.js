@@ -12,7 +12,7 @@ export const listReducer = (state, action) => {
     case 'CREATE_ITEM': {
       const item = action.payload
       const temp = [...state]
-      temp.unshift(item)
+      temp.push(item)
       return temp
     }
     case 'DELETE_ITEM': {

@@ -1,28 +1,36 @@
 import React, { useEffect, useState, useContext } from 'react'
-import TaskList from './TaskList'
 import { getTaskList } from 'lib/storage'
-import Spinner from './Spinner'
 import { ListContext } from 'contexts/ListContext'
-import AddTask from './AddTask'
+import TaskList from 'components/TaskList'
+import Spinner from 'components/Spinner'
+import AddTask from 'components/AddTask'
+import { useErrorOutlet } from 'contexts/ErrorContext'
 
 const AppMain = () => {
   const { tasklist, dispatch } = useContext(ListContext)
   const [loading, setLoading] = useState(true)
+  const setError = useErrorOutlet()
 
   useEffect(() => {
     // console.log('SPACETAG: AppMain.js SETTING DATA')
-    getTaskList(data => {
-      dispatch({ type: 'SET_LIST', payload: data })
-      setLoading(false)
-    })
+    getTaskList(
+      data => {
+        dispatch({ type: 'SET_LIST', payload: data })
+        setLoading(false)
+      },
+      err => {
+        setError(err)
+        setLoading(false)
+      }
+    )
   }, [])
 
   return (
     <main className="app-main">
       <AddTask />
       {loading && <Spinner />}
-      {!loading && tasklist.length > 0 && <TaskList />}
-      {!loading && tasklist.length <= 0 && <div>No tasks! Binge time! :)</div>}
+      {!loading && tasklist && tasklist.length > 0 && <TaskList />}
+      {!loading && tasklist && tasklist.length <= 0 && <div>No tasks! Binge time! :)</div>}
     </main>
   )
 }

@@ -93,10 +93,13 @@ export const dateAdd = (date, count, timespan) => {
 
   switch (timespan) {
     case 'day':
-      tempDate.setDate(dayOfMonth + count)
+      tempDate.setTime(date.getTime() + count * 86400000)
+
+      // tempDate.setDate(dayOfMonth + count)
       break
     case 'week':
-      tempDate.setDate(dayOfMonth + count * 7)
+      tempDate.setTime(date.getTime() + count * 7 * 86400000)
+      // tempDate.setDate(dayOfMonth + count * 7)
       break
     case 'month':
       tempDate.setMonth(month + count)

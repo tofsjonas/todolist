@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useContext, useRef } from 'react'
-import TaskItemMenu from './TaskItemMenu'
-import { ListContext } from 'contexts/ListContext'
+import TaskItemMenu from 'components/TaskItemMenu'
 import { updateListItem } from 'lib/storage'
+import { ListContext } from 'contexts/ListContext'
+import { useErrorOutlet } from 'contexts/ErrorContext'
 const TaskItem = ({ task, zIndex }) => {
+  const initRef = useRef(false)
   const { dispatch } = useContext(ListContext)
+  const setError = useErrorOutlet()
+
   const [title, setTitle] = useState(' ')
   const [memo, setMemo] = useState()
   const [checked, setChecked] = useState(false)
@@ -12,9 +16,16 @@ const TaskItem = ({ task, zIndex }) => {
   }
 
   useEffect(() => {
+    if (initRef.current) {
+      save()
+    }
+  }, [checked])
+
+  useEffect(() => {
     setTitle(task.title)
     setMemo(task.memo)
     setChecked(task.checked || false)
+    initRef.current = true
   }, [task])
 
   const handleKeyDown = e => {
@@ -32,8 +43,9 @@ const TaskItem = ({ task, zIndex }) => {
     // eslint-disable-next-line eqeqeq
     if (JSON.stringify(task) != JSON.stringify(payload)) {
       dispatch({ type: 'UPDATE_ITEM', payload })
-      updateListItem(payload)
-      // console.log('SPACETAG: TaskItem.js SAVING!!!')
+      updateListItem(payload, err => {
+        setError(err)
+      })
     }
   }
 

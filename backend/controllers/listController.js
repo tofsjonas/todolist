@@ -16,20 +16,32 @@ export const createList = async () => {
     var list = new ListModel()
     list.save((err, list) => {
       if (err) reject(err)
-      list.items.push(new ListItemModel({ title: 'Example task', when: new Date('2018-09-07') }))
-      list.items.push(new ListItemModel({ title: 'Example task', when: new Date('2018-11-24') }))
-      list.items.push(new ListItemModel({ title: 'Example task', when: new Date('2019-02-21') }))
-      list.items.push(new ListItemModel({ title: 'Example task', when: new Date('2019-10-01') }))
-      list.items.push(new ListItemModel({ title: 'Example task', when: new Date('2019-11-01') }))
-      list.items.push(new ListItemModel({ title: 'Example task', when: new Date('2019-11-02') }))
-      list.items.push(new ListItemModel({ title: 'Example task', when: new Date('2019-11-03') }))
-      list.items.push(new ListItemModel({ title: 'Example task', when: new Date('2019-11-04') }))
-      list.items.push(new ListItemModel({ title: 'Example task', when: new Date('2019-11-05') }))
-      list.items.push(new ListItemModel({ title: 'Example task', when: new Date('2019-12-01') }))
-      list.items.push(new ListItemModel({ title: 'Example task', when: new Date('2020-01-01') }))
-      list.items.push(new ListItemModel({ title: 'Example task', when: new Date('2020-01-12') }))
-      list.items.push(new ListItemModel({ title: 'Example task', when: new Date('2020-02-01') }))
+      var date = new Date()
+      var today = date.toISOString().substr(0, 10)
+      // var tomorrow = new Date(date.setTime(date.getTime() + 2 * 86400000))
+      var tomorrow = date.setTime(date.getTime() + 2 * 86400000)
+
+      // to make demo faster
+      list.items.push(new ListItemModel({ title: 'Example task', when: '2018-09-07' }))
+      list.items.push(new ListItemModel({ title: 'Example task', when: '2018-11-24' }))
+      list.items.push(new ListItemModel({ title: 'Example task', when: '2019-02-21' }))
+      list.items.push(new ListItemModel({ title: 'Example task', when: '2019-10-01' }))
+      list.items.push(new ListItemModel({ title: 'Example task', when: '2019-11-01' }))
+      list.items.push(new ListItemModel({ title: 'Example task', when: '2019-11-02' }))
+      list.items.push(new ListItemModel({ title: 'Example task', when: '2019-11-03' }))
+      list.items.push(new ListItemModel({ title: 'Example task', when: '2019-11-04' }))
+      list.items.push(new ListItemModel({ title: 'Example task', when: '2019-11-05' }))
+      list.items.push(new ListItemModel({ title: 'Example task', when: '2019-12-01' }))
+      list.items.push(new ListItemModel({ title: 'Example task', when: '2020-01-01' }))
+      list.items.push(new ListItemModel({ title: 'Example task', when: '2020-01-12' }))
+      list.items.push(new ListItemModel({ title: 'Example task', when: '2020-02-01' }))
+      list.items.push(new ListItemModel({ title: 'Example task', when: today }))
+      list.items.push(new ListItemModel({ title: 'Example task', when: today }))
+      list.items.push(new ListItemModel({ title: 'Example task', when: tomorrow }))
+      list.items.push(new ListItemModel({ title: 'Example task', when: tomorrow }))
+      list.items.push(new ListItemModel({ title: 'Example task', when: tomorrow }))
       list.save((err, list) => {
+        if (err) reject(err)
         resolve(list)
       })
 
@@ -52,6 +64,19 @@ export const getAllLists = async () => {
 export const getList = async ({ list_id }) => {
   let promise = new Promise((resolve, reject) => {
     ListModel.findOne({ _id: list_id }, (err, list) => {
+      // alterntativt sätt:
+      // ListModel.findOne({ _id: list_id }).exec((err, list) => {
+      if (err) reject(err)
+      resolve(list)
+    })
+  })
+  let result = await promise
+  return result
+}
+export const findList = async query => {
+  let promise = new Promise((resolve, reject) => {
+    ListModel.findOne({ ...query }, (err, list) => {
+      // console.log('SPACETAG: listController.js', list)
       if (err) reject(err)
       resolve(list)
     })
