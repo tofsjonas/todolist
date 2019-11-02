@@ -15,7 +15,6 @@ const Main = () => {
       {isAuthenticated && (
         <DateContextProvider>
           <ListContextProvider>
-            <ErrorOutlet />
             <AppHeader />
             <AppMain />
           </ListContextProvider>

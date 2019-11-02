@@ -3,17 +3,19 @@ import './fontello/css/fontello.css'
 import AuthContextProvider from './contexts/AuthContext'
 import Main from './Main'
 import { ErrorDisplayBoundary } from 'contexts/ErrorContext'
+import ErrorOutlet from './components/ErrorOutlet'
 
 function App() {
   // console.log('SPACETAG: App.js', process.env.NODE_ENV)
   return (
-    <div className="app">
-      <ErrorDisplayBoundary>
-        <AuthContextProvider>
+    <ErrorDisplayBoundary>
+      <AuthContextProvider>
+        <ErrorOutlet />
+        <div className="app">
           <Main />
-        </AuthContextProvider>
-      </ErrorDisplayBoundary>
-    </div>
+        </div>
+      </AuthContextProvider>
+    </ErrorDisplayBoundary>
   )
   // try {
   //   } catch (error) {
