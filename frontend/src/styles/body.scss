@@ -7,13 +7,11 @@ body {
   //  https://joshuawinn.com/responsive-diagonal-two-color-backgrounds-with-css/
   &:before {
     content: '';
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    // width: 100vw;
-    // height: 100vh;
     background: linear-gradient(160deg, $pink-100 50%, $pink-200 50%);
     z-index: -1;
   }
