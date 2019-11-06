@@ -9,20 +9,22 @@ import Spinner from 'components/Spinner'
 
 const AddTask = () => {
   const { dispatch } = useContext(ListContext)
-  const { startDate } = useContext(DateContext)
+  const { startDate, currentDate } = useContext(DateContext)
   const setError = useErrorOutlet()
 
-  const [selectedDay, setSelectedDay] = useState(new Date())
-  const [title, setTitle] = useState('A task!')
+  // const [selectedDay, setSelectedDay] = useState(new Date())
+  // const [title, setTitle] = useState('A task!')
+  const [selectedDay, setSelectedDay] = useState()
+  const [title, setTitle] = useState('')
   const [savable, setSavable] = useState(false)
   const [active, setActive] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
 
   const innerRef = useRef(null)
 
-  // useEffect(() => {
-  //   setSelectedDay(startDate)
-  // }, [startDate])
+  useEffect(() => {
+    setSelectedDay()
+  }, [currentDate])
 
   const hideDetails = () => {
     setActive(false)
