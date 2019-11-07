@@ -43,15 +43,17 @@ app.use(logger('dev'))
 app.use(json())
 app.use(urlencoded({ extended: false }))
 app.use(cookieParser())
-app.use('/todo', listRouter)
+app.use('/todolist/backend', listRouter)
 
-// app.use(express.static(join(__dirname, 'public')))
+app.use(express.static(join(__dirname, 'public')))
 var absolutePath = path.resolve('../frontend/build')
+// app.use('/static', express.static('public'))
 
 try {
   if (fs.existsSync(absolutePath)) {
     // console.log('SPACETAG: app.js', 'aha!')
-    app.use(express.static(absolutePath))
+    app.use('/todolist', express.static(absolutePath))
+    // app.use(express.static(absolutePath))
     app.get('/*', function(req, res) {
       res.sendFile(path.join(absolutePath, 'index.html'))
     })

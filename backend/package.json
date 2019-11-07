@@ -1,6 +1,6 @@
 {
-  "name": "backend",
-  "version": "0.1.0",
+  "name": "todolisst-backend",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "start": "nodemon ./index.js",
