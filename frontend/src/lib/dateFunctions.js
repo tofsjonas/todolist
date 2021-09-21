@@ -2,7 +2,7 @@
 const browserLanguage = 'en-GB'
 
 //https://weeknumber.net/how-to/javascript
-export const getWeekNumber = d => {
+export const getWeekNumber = (d) => {
   var date = new Date(d.getTime())
   date.setHours(0, 0, 0, 0)
   // Thursday in current week decides the year.
@@ -13,7 +13,7 @@ export const getWeekNumber = d => {
   return 1 + Math.round(((date.getTime() - week1.getTime()) / 86400000 - 3 + ((week1.getDay() + 6) % 7)) / 7)
 }
 
-export const getSunday = date => {
+export const getSunday = (date) => {
   // var d = new Date(date)
   var dayOfMonth = date.getDate()
   var dayOfWeek = date.getDay()
@@ -21,11 +21,11 @@ export const getSunday = date => {
   return new Date(date.setDate(diff - 1))
 }
 
-export const getNameOfDay = date => {
+export const getNameOfDay = (date) => {
   var options = { weekday: 'long' }
   return date.toLocaleDateString(browserLanguage, options)
 }
-export const getNameOfMonth = date => {
+export const getNameOfMonth = (date) => {
   var options = { month: 'long' }
   return date.toLocaleDateString(browserLanguage, options)
 }
@@ -40,7 +40,7 @@ export const getNameOfMonth = date => {
 //   'en-GB': 'day',
 // }
 
-export const getNameOfWeek = date => {
+export const getNameOfWeek = (date) => {
   var weekNumber = getWeekNumber(date)
   var weekName = 'week ' + weekNumber
   // var weekName = (namesOfWeek[browserLanguage] || namesOfWeek['en-GB']) + ' ' + weekNumber
@@ -80,15 +80,20 @@ export const getTimeSpanDates = (date, timespan) => {
 // console.log('SPACETAG: dateFunctions.js', 'pp'.padStart(4, 'a'))
 
 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString
-export const getLocaleDateString = date => {
-  var options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }
+export const getLocaleDateString = (date) => {
+  var options = {
+    weekday: 'short',
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  }
   return date.toLocaleDateString(browserLanguage, options)
 }
 
 export const dateAdd = (date, count, timespan) => {
   var tempDate = new Date(date)
   var month = date.getMonth()
-  var dayOfMonth = date.getDate()
+  // var dayOfMonth = date.getDate()
   var year = date.getFullYear()
 
   switch (timespan) {

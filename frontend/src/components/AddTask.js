@@ -34,7 +34,7 @@ const AddTask = () => {
     setSelectedDay(selected ? undefined : day)
   }
 
-  const handleTitleChange = e => {
+  const handleTitleChange = (e) => {
     setTitle(e.target.value)
   }
 
@@ -43,15 +43,15 @@ const AddTask = () => {
     const data = { title, when: selectedDay.toISOString().substr(0, 10) }
     createListItem(
       data,
-      item => {
+      (item) => {
         dispatch({ type: 'CREATE_ITEM', payload: item })
         setIsSaving(false)
         clearForm()
       },
-      err => {
+      (err) => {
         setIsSaving(false)
         setError(err)
-      }
+      },
     )
   }
   const clearForm = () => {
@@ -79,13 +79,25 @@ const AddTask = () => {
     <div className={'add-task' + (active ? ' active' : '')} ref={innerRef}>
       <div className="add-task-input-container">
         <i className="icon-article" />
-        <input onFocus={handleFocus} type="text" placeholder="Add a task..." value={title} onChange={handleTitleChange} />
+        <input
+          onFocus={handleFocus}
+          type="text"
+          placeholder="Add a task..."
+          value={title}
+          onChange={handleTitleChange}
+        />
       </div>
       {isSaving && <Spinner />}
       {!isSaving && (
         <div className="task-details">
           <p>{selectedDay ? selectedDay.toLocaleDateString() : 'Please select a day 👻'}</p>
-          <DayPicker month={startDate} showWeekNumbers todayButton="Go to Today" onDayClick={handleDayClick} selectedDays={selectedDay} />
+          <DayPicker
+            month={startDate}
+            showWeekNumbers
+            todayButton="Go to Today"
+            onDayClick={handleDayClick}
+            selectedDays={selectedDay}
+          />
           <div className="buttons">
             <button className="cancel" onClick={clearForm}>
               Cancel

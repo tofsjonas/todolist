@@ -11,30 +11,8 @@ const TaskItem = ({ task, zIndex }) => {
   const [title, setTitle] = useState(' ')
   const [memo, setMemo] = useState()
   const [checked, setChecked] = useState(false)
-  const handleBlur = () => {
-    save()
-  }
 
-  useEffect(() => {
-    if (initRef.current) {
-      save()
-    }
-  }, [checked])
-
-  useEffect(() => {
-    setTitle(task.title)
-    setMemo(task.memo)
-    setChecked(task.checked || false)
-    initRef.current = true
-  }, [task])
-
-  const handleKeyDown = e => {
-    if (e.key === 'Enter') {
-      e.preventDefault()
-      e.target.blur()
-    }
-  }
-  const save = () => {
+  const save = React.useCallback(() => {
     const payload = { ...task, checked, memo, title }
     if (!memo) {
       delete payload.memo
@@ -43,16 +21,55 @@ const TaskItem = ({ task, zIndex }) => {
     // eslint-disable-next-line eqeqeq
     if (JSON.stringify(task) != JSON.stringify(payload)) {
       dispatch({ type: 'UPDATE_ITEM', payload })
-      updateListItem(payload, err => {
+      updateListItem(payload, (err) => {
         setError(err)
       })
     }
+  }, [checked, dispatch, memo, setError, task, title])
+
+  // const pelle = () => {
+  //   const payload = { ...task, checked, memo, title }
+  //   if (!memo) {
+  //     delete payload.memo
+  //   }
+
+  //   // eslint-disable-next-line eqeqeq
+  //   if (JSON.stringify(task) != JSON.stringify(payload)) {
+  //     dispatch({ type: 'UPDATE_ITEM', payload })
+  //     updateListItem(payload, err => {
+  //       setError(err)
+  //     })
+  //   }
+  // }
+
+  const handleBlur = () => {
+    save()
   }
 
-  const handleTitleChange = e => {
+  useEffect(() => {
+    if (initRef.current) {
+      save()
+    }
+  }, [checked, save])
+
+  useEffect(() => {
+    setTitle(task.title)
+    setMemo(task.memo)
+    setChecked(task.checked || false)
+    initRef.current = true
+  }, [task])
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      e.target.blur()
+    }
+  }
+
+  const handleTitleChange = (e) => {
     setTitle(e.target.value)
   }
-  const handleMemoChange = e => {
+  const handleMemoChange = (e) => {
     setMemo(e.target.value)
   }
   const toggleChecked = () => {
@@ -66,8 +83,29 @@ const TaskItem = ({ task, zIndex }) => {
         {checked && <i className="icon-ok" />}
       </div>
       <div className="description">
-        <input type="text" onKeyDown={handleKeyDown} maxLength="50" onBlur={handleBlur} value={title} placeholder="Rename task..." onChange={handleTitleChange} className="title" required />
-        {typeof memo !== 'undefined' && <input type="text" onKeyDown={handleKeyDown} maxLength="50" onBlur={handleBlur} className={'memo' + (typeof memo !== 'undefined' ? ' active' : '')} placeholder="Add a memo..." value={memo || ''} onChange={handleMemoChange} />}
+        <input
+          type="text"
+          onKeyDown={handleKeyDown}
+          maxLength="50"
+          onBlur={handleBlur}
+          value={title}
+          placeholder="Rename task..."
+          onChange={handleTitleChange}
+          className="title"
+          required
+        />
+        {typeof memo !== 'undefined' && (
+          <input
+            type="text"
+            onKeyDown={handleKeyDown}
+            maxLength="50"
+            onBlur={handleBlur}
+            className={'memo' + (typeof memo !== 'undefined' ? ' active' : '')}
+            placeholder="Add a memo..."
+            value={memo || ''}
+            onChange={handleMemoChange}
+          />
+        )}
       </div>
       <div className="dots">
         <TaskItemMenu task={task} />

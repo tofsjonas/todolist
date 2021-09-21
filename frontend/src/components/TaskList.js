@@ -10,9 +10,9 @@ const TaskList = () => {
   const [normal, setNormal] = useState([])
   useEffect(() => {
     // console.log('SPACETAG: TaskList.js TASK LIST UPDATED!')
-    const pinnedList = tasklist.filter(task => task.pinned)
+    const pinnedList = tasklist.filter((task) => task.pinned)
     // const normalList = tasklist.filter(task => !task.pinned)
-    const normalList = tasklist.filter(task => {
+    const normalList = tasklist.filter((task) => {
       if (task.pinned) return false
       if (task.when > endDate.toISOString().substr(0, 10)) return false
       if (task.when < startDate.toISOString().substr(0, 10)) return false
@@ -29,7 +29,7 @@ const TaskList = () => {
     <div className="task-tasklist">
       {pinned.length > 0 && (
         <>
-          {pinned.map(task => {
+          {pinned.map((task) => {
             zIndex -= 2 // otherwise the dot-menu will be troublesome...
             return <TaskItem key={task._id} task={task} zIndex={zIndex} />
           })}
@@ -38,7 +38,7 @@ const TaskList = () => {
       )}
       {normal.length > 0 && (
         <>
-          {normal.map(task => {
+          {normal.map((task) => {
             zIndex -= 2 // otherwise the dot-menu will be troublesome...
             return <TaskItem key={task._id} task={task} zIndex={zIndex} />
           })}

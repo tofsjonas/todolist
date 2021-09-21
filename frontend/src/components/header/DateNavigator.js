@@ -1,6 +1,13 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { DateContext } from 'contexts/DateContext'
-import { dateAdd, getLocaleDateString, getTimeSpanDates, getNameOfDay, getNameOfMonth, getNameOfWeek } from 'lib/dateFunctions'
+import {
+  dateAdd,
+  getLocaleDateString,
+  getTimeSpanDates,
+  getNameOfDay,
+  getNameOfMonth,
+  getNameOfWeek,
+} from 'lib/dateFunctions'
 const DateNavigator = () => {
   const { timespan, currentDate, startDate, endDate, dispatch } = useContext(DateContext)
   const [title, setTitle] = useState('')
@@ -9,20 +16,28 @@ const DateNavigator = () => {
   useEffect(() => {
     switch (timespan) {
       case 'day':
-        const day = getNameOfDay(currentDate)
-        setTitle(day)
+        {
+          let day = getNameOfDay(currentDate)
+          setTitle(day)
+        }
         break
       case 'week':
-        const week = getNameOfWeek(currentDate)
-        setTitle(week)
+        {
+          const week = getNameOfWeek(currentDate)
+          setTitle(week)
+        }
         break
       case 'month':
-        const month = getNameOfMonth(currentDate)
-        setTitle(month)
+        {
+          const month = getNameOfMonth(currentDate)
+          setTitle(month)
+        }
         break
       case 'year':
-        const year = currentDate.getFullYear()
-        setTitle(year)
+        {
+          const year = currentDate.getFullYear()
+          setTitle(year)
+        }
         break
       default:
         break
@@ -43,7 +58,7 @@ const DateNavigator = () => {
     _step('left')
   }
 
-  const _step = direction => {
+  const _step = (direction) => {
     var newCurrentDate = dateAdd(currentDate, direction === 'left' ? -1 : 1, timespan)
     const newDates = getTimeSpanDates(newCurrentDate, timespan)
     dispatch({ type: 'SET_DATE', payload: { ...newDates, currentDate: newCurrentDate } })

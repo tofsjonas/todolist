@@ -1,18 +1,19 @@
 import axios from 'axios'
 var loc = window.location
-const serverUrl = (loc.hostname === 'localhost' ? 'http://localhost:3003' : loc.protocol + '//' + loc.host) + '/todolist/backend'
+const serverUrl =
+  (loc.hostname === 'localhost' ? 'http://localhost:3003' : loc.protocol + '//' + loc.host) + '/todolist/backend'
 
 export const getTaskList = (success, fail) => {
   axios
     .get(serverUrl + '/getlist', { crossdomain: true })
-    .then(response => {
+    .then((response) => {
       if (response.status === 200) {
         const list = response.data
         localStorage.setItem('listId', list._id)
         success(list.items)
       } else fail(new Error('Unknown error'))
     })
-    .catch(err => {
+    .catch((err) => {
       fail(err)
     })
 }
@@ -26,7 +27,7 @@ export const createListItem = (data, success, fail) => {
   const url = serverUrl + '/additem/' + listId
   axios
     .post(url, { data }, { crossdomain: true })
-    .then(response => {
+    .then((response) => {
       if (response.status === 200) {
         const item = response.data
         success(item)
@@ -34,7 +35,7 @@ export const createListItem = (data, success, fail) => {
         fail(new Error('Unknown error'))
       }
     })
-    .catch(error => {
+    .catch((error) => {
       fail(error)
     })
 }
@@ -47,12 +48,12 @@ export const deleteListItem = (_id, fail) => {
   }
   axios
     .delete(serverUrl + '/deleteitem/' + listId + '/' + _id, { crossdomain: true })
-    .then(function(response) {
+    .then(function (response) {
       if (response.status !== 204) {
         fail(new Error('Unknown error'))
       }
     })
-    .catch(function(error) {
+    .catch(function (error) {
       fail(error)
     })
 }
@@ -65,13 +66,13 @@ export const updateListItem = (data, fail) => {
   const url = serverUrl + '/updateitem/' + listId + '/' + data._id + ''
   axios
     .put(url, { data }, { crossdomain: true })
-    .then(response => {
+    .then((response) => {
       if (response.status !== 204) {
         // console.log('SPACETAG: storage.axios.js', response)
         fail(new Error('Unknown error'))
       }
     })
-    .catch(error => {
+    .catch((error) => {
       fail(error)
     })
 }

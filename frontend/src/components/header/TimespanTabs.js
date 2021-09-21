@@ -4,7 +4,7 @@ import { getTimeSpanDates } from 'lib/dateFunctions'
 const TimespanTabs = () => {
   const { timespan, currentDate, dispatch } = useContext(DateContext)
 
-  const setTimespan = span => {
+  const setTimespan = (span) => {
     const { startDate, endDate } = getTimeSpanDates(currentDate, span)
     dispatch({ type: 'SET_DATE', payload: { startDate, endDate, timespan: span } })
 

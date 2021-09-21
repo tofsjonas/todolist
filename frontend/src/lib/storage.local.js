@@ -1,20 +1,12 @@
 import { dateAdd } from 'lib/dateFunctions'
 
 const uniqueId = () => {
-  return (
-    'i' +
-    Date.now() +
-    Math.random()
-      .toString()
-      .slice(2, 12)
-  )
+  return 'i' + Date.now() + Math.random().toString().slice(2, 12)
 }
 
-const resetTestEnvironment = params => {
+const resetTestEnvironment = () => {
   var today = new Date().toISOString().substr(0, 10)
-  var tomorrow = dateAdd(new Date(), 1, 'day')
-    .toISOString()
-    .substr(0, 10)
+  var tomorrow = dateAdd(new Date(), 1, 'day').toISOString().substr(0, 10)
 
   const initialState = [
     { _id: '123450', title: 'todostuff 1', when: '2018-02-08' },
@@ -32,7 +24,7 @@ const resetTestEnvironment = params => {
 }
 resetTestEnvironment()
 
-export const getTaskList = callback => {
+export const getTaskList = (callback) => {
   var localData = localStorage.getItem('tasklist') || []
   var parsedData = JSON.parse(localData)
   setTimeout(() => {
@@ -51,18 +43,18 @@ export const createListItem = (item, callback) => {
   }, 200)
 }
 
-export const deleteListItem = (_id, callback) => {
+export const deleteListItem = (_id) => {
   var localData = localStorage.getItem('tasklist') || []
   var parsedData = JSON.parse(localData)
-  const newData = parsedData.filter(item => item._id !== _id)
+  const newData = parsedData.filter((item) => item._id !== _id)
   localStorage.setItem('tasklist', JSON.stringify(newData))
 }
 
-export const updateListItem = (item, callback) => {
+export const updateListItem = (item) => {
   var localData = localStorage.getItem('tasklist') || []
   var parsedData = JSON.parse(localData)
 
-  const newData = parsedData.map(storedItem => {
+  const newData = parsedData.map((storedItem) => {
     return item._id === storedItem._id ? item : storedItem
   })
   localStorage.setItem('tasklist', JSON.stringify(newData))

@@ -5,7 +5,7 @@ export const listReducer = (state, action) => {
     }
     case 'UPDATE_ITEM': {
       const updatedItem = action.payload
-      return state.map(item => {
+      return state.map((item) => {
         return item._id === updatedItem._id ? updatedItem : item
       })
     }
@@ -17,7 +17,7 @@ export const listReducer = (state, action) => {
     }
     case 'DELETE_ITEM': {
       const deletedItem = action.payload
-      return state.filter(item => item._id !== deletedItem._id)
+      return state.filter((item) => item._id !== deletedItem._id)
     }
     default:
       return state

@@ -14,16 +14,16 @@ const AppMain = () => {
   useEffect(() => {
     // console.log('SPACETAG: AppMain.js SETTING DATA')
     getTaskList(
-      data => {
+      (data) => {
         dispatch({ type: 'SET_LIST', payload: data })
         setLoading(false)
       },
-      err => {
+      (err) => {
         setError(err)
         setLoading(false)
-      }
+      },
     )
-  }, [])
+  }, [dispatch, setError])
 
   return (
     <main className="app-main">

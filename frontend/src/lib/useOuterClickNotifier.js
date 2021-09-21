@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 
 //https://stackoverflow.com/questions/32553158/detect-click-outside-react-component
 const useOuterClickNotifier = (onOuterClick, innerRef) => {
@@ -16,7 +16,7 @@ const useOuterClickNotifier = (onOuterClick, innerRef) => {
         innerRef.current && !innerRef.current.contains(e.target) && onOuterClick(e)
       }
     },
-    [onOuterClick, innerRef] // invoke again, if inputs have changed
+    [onOuterClick, innerRef], // invoke again, if inputs have changed
   )
 }
 export default useOuterClickNotifier

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext, useEffect } from 'react'
+import React, { useState, useRef, useContext } from 'react'
 import { ListContext } from 'contexts/ListContext'
 import { useErrorOutlet } from 'contexts/ErrorContext'
 import { updateListItem, deleteListItem } from 'lib/storage'
@@ -18,24 +18,24 @@ const TaskItemMenu = ({ task }) => {
     setVisible(!visible)
   }
 
-  const togglePin = e => {
+  const togglePin = (e) => {
     e.stopPropagation()
     const payload = { ...task, pinned: !task.pinned }
     dispatch({ type: 'UPDATE_ITEM', payload })
     setVisible(false)
     updateListItem(payload)
   }
-  const addMemo = e => {
+  const addMemo = (e) => {
     e.stopPropagation()
     const payload = { ...task, memo: '' }
     dispatch({ type: 'UPDATE_ITEM', payload })
     setVisible(false)
   }
-  const deleteTask = e => {
+  const deleteTask = (e) => {
     e.stopPropagation()
     dispatch({ type: 'DELETE_ITEM', payload: task })
     setVisible(false)
-    deleteListItem(task._id, err => {
+    deleteListItem(task._id, (err) => {
       setError(err)
     })
   }

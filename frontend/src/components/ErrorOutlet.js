@@ -4,7 +4,7 @@ const ErrorOutlet = () => {
   const { error, setError } = useContext(ErrorContext)
   // console.log('SPACETAG: ErrorOutlet.js', error)
 
-  const resetError = params => {
+  const resetError = () => {
     setError(null)
   }
 
