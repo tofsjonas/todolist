@@ -19,7 +19,7 @@ import indexRouter from "./routes/indexRouter";
 
 import mongoose from "mongoose";
 
-const connection_string = `mongodb://${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/${process.env.MONGO_DATABASE}`;
+const connection_string = `'mongodb://localhost:27017/todolist'`;
 
 mongoose
   .connect(connection_string, {
