@@ -5,7 +5,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.21.2",
-    "node-sass": "^4.13.0",
+    "node-sass": "npm:sass@^1.45.1",
     "react": "^16.11.0",
     "react-day-picker": "^7.4.0",
     "react-dom": "^16.11.0",
