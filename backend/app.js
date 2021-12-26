@@ -19,7 +19,7 @@ import indexRouter from "./routes/indexRouter";
 
 import mongoose from "mongoose";
 
-const connection_string = `'mongodb://localhost:27017/todolist'`;
+const connection_string = "mongodb://localhost:27017/todolist";
 
 mongoose
   .connect(connection_string, {
